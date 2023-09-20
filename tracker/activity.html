@@ -53,6 +53,8 @@
             </small>
           </div>
 
+          <br />
+
           <!-- Hours input -->
           <div class="form-group">
             <label class="form-label" for="hours">
@@ -74,6 +76,8 @@
             </small>
           </div>
 
+          <br />
+
           <!-- Drop down list for the type of activity -->
           <div class="form-group">
             <label class="form-label" for="activityType">What type?</label>
@@ -84,6 +88,8 @@
               <option v-for="type in types">{{ type }}</option>
             </select>
           </div>
+
+          <br />
 
           <!-- Label "What media" for radio buttons: Traditional or Digital -->
           <div class="form-label pb-2">What media?</div>
@@ -128,7 +134,10 @@
             </label>
           </div>
 
+          <br /><br />
+
           <!-- Add a "Completed?" checkbox -->
+          <div>Status</div>
           <div class="form-check pb-3 pt-3">
             <input
               class="form-check-input"
@@ -141,6 +150,8 @@
             </label>
           </div>
 
+          <br />
+
           <!-- Add a textarea for "Notes" -->
           <div class="form-group">
             <label for="textareaInput">Notes:</label>
@@ -151,6 +162,8 @@
               v-model="note"
             ></textarea>
           </div>
+
+          <br />
 
           <!-- Add a "Add record" button -->
           <div>
@@ -181,29 +194,33 @@
 
           <div id="records">
             <table class="table table-hover">
-              <tr>
-                <th>Date</th>
-                <th>How many hours?</th>
-                <th>Type</th>
-                <th>Media</th>
-                <th>Completed</th>
-                <th>Notes</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>How many hours?</th>
+                  <th>Type</th>
+                  <th>Media</th>
+                  <th>Completed</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
 
               <!-- TODO use v-for to create one table row for each activity record -->
-              <tr
-                v-for="record in activityRecords"
-                v-bind:class="{sketchingRow: record.type === 'Sketching',
+              <tbody>
+                <tr
+                  v-for="record in activityRecords"
+                  v-bind:class="{sketchingRow: record.type === 'Sketching',
                                drawingRow: record.type === 'Drawing',
                                paintingRow: record.type === 'Painting'}"
-              >
-                <td>{{ Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(record.date) }}</td>
-                <td>{{ record.hours.toFixed(2) }}</td>
-                <td>{{ record.type }}</td>
-                <td>{{ record.medium }}</td>
-                <td>{{ checkedBox(record.completed) }}</td>
-                <td>{{ textareaDisplayCharacterLimit(record.note) }}</td>
-              </tr>
+                >
+                  <td>{{ formatDate(record.date) }}</td>
+                  <td>{{ record.hours.toFixed(2) }}</td>
+                  <td>{{ record.type }}</td>
+                  <td>{{ record.medium }}</td>
+                  <td>{{ checkedBox(record.completed) }}</td>
+                  <td>{{ textareaDisplayCharacterLimit(record.note) }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -380,13 +397,19 @@
             this.errors = [];
 
             // Validation: dates need to be valid, and in the past or today
-            if (!this.dateString || this.dateString == "Invalid Date" || date > new Date()) {
+            if (
+              !this.dateString ||
+              this.dateString == "Invalid Date" ||
+              date > new Date()
+            ) {
               this.errors.push("Select a valid date, today or in the past.");
             }
 
             // Validation: Hours should be between 0 and 24
             if (this.hours <= 0 || this.hours > 24) {
-              this.errors.push("The number of hours must be greater than 0 and less than 24.");
+              this.errors.push(
+                "The number of hours must be greater than 0 and less than 24."
+              );
             }
 
             // Validation: Activity type has to be selected from drop down list
@@ -422,7 +445,7 @@
                 return r1.date.getTime() - r2.date.getTime(); // this returns a timestamp
 
                 // if you want the most recent date on top of the list
-                // return r2.date.getTime() - r1.date.getTime()         // this returns a timestamp
+                // return r2.date.getTime() - r1.date.getTime() // this returns a timestamp
               });
             }
           },
@@ -438,6 +461,9 @@
             }
             return text;
           },
+          formatDate(date) {
+            return Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(date);
+          }
         },
       }).mount("#app");
     </script>
