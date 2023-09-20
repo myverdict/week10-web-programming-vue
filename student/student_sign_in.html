@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Student Sign In</title>
-    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -28,8 +28,15 @@
           <label for="name">Name</label>
 
           <!-- TODO v-model newStudentName -->
-          <input id="name" class="form-control" v-model.trim="newStudentName" />
+          <input
+            id="name"
+            class="form-control"
+            v-model.trim="newStudentName"
+            autocomplete="name"
+          />
         </div>
+
+        <br />
 
         <div class="form-group">
           <label for="starID">Star ID</label>
@@ -38,20 +45,26 @@
           <input id="starID" class="form-control" v-model.trim="newStarID" />
         </div>
 
+        <br />
+
         <!-- TODO v-on:click event handler -->
         <!-- <button class="btn btn-primary" @click="addStudent">Add</button> -->
         <button class="btn btn-primary" v-on:click="addStudent">Add</button>
       </div>
 
+      <br />
+
       <div class="card student-list m-2 p-2">
         <h4 class="card-title">Student List</h4>
         <div id="student-table">
           <table class="table">
-            <tr>
-              <th>Name</th>
-              <th>StarID</th>
-              <th>Present?</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>StarID</th>
+                <th>Present?</th>
+              </tr>
+            </thead>
 
             <!--
               TODO create table rows
@@ -60,22 +73,25 @@
             -->
             <!-- <tr v-for="student in students" v-bind:class="{ present: student.present, absent: !student.present }"> -->
             <!-- <tr v-for="student in students" :key="student.starID" :class="student.present ? 'present' : 'absent'"> -->
-            <tr
-              v-for="student in students"
-              v-bind:key="student.starID"
-              v-bind:class="student.present ? 'present' : 'absent'"
-            >
-              <td>{{ student.name }}</td>
-              <td>{{ student.starID }}</td>
-              <!-- <td><input type="checkbox" v-model="student.present" @change="arrivedOrLeft(student)"></td> -->
-              <td>
-                <input
-                  type="checkbox"
-                  v-model="student.present"
-                  v-on:change="arrivedOrLeft(student)"
-                />
-              </td>
-            </tr>
+            <tbody>
+              <tr
+                v-for="student in students"
+                v-bind:key="student.starID"
+                v-bind:class="student.present ? 'present' : 'absent'"
+              >
+                <td>{{ student.name }}</td>
+                <td>{{ student.starID }}</td>
+                <!-- <td><input type="checkbox" v-model="student.present" @change="arrivedOrLeft(student)"></td> -->
+                <td>
+                  <input
+                    type="checkbox"
+                    name="presentOrAbsent"
+                    v-model="student.present"
+                    v-on:change="arrivedOrLeft(student)"
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -94,24 +110,25 @@
 
     <script>
       // TODO Vue app
-      let app = new Vue({
-        el: "#app",
-        data: {
-          newStudentName: "",
-          newStarID: "",
-          students: [
-            { name: "A Student", starID: "aa1234aa", present: false },
-            { name: "B Student", starID: "by456osc", present: false },
-          ],
-          errors: [],
-          mostRecentStudent: {}, // last person to change the value of a checkbox
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            newStudentName: "",
+            newStarID: "",
+            students: [
+              { name: "A Student", starID: "aa1234aa", present: false },
+              { name: "B Student", starID: "by456osc", present: false },
+            ],
+            errors: [],
+            mostRecentStudent: {}, // last person to change the value of a checkbox
+          };
         },
         methods: {
           addStudent() {
             // Alternate option with vue-model.trim
-            // trim off the spaces from the name input
+            // trim off the spaces from the name and starID input
             // this.newStudentName = this.newStudentName.trim();
-            // trim off the spaces from the starID input
             // this.newStarID = this.newStarID.trim();
 
             this.errors = [];
@@ -136,8 +153,8 @@
 
               // Sort students in alphabetical order
               this.students.sort(function (s1, s2) {
-                // In JS, one string is greater than another string if it is after it,
-                // alphabetically. So, 'z' > 'a'
+                // In JS, one string is greater than another string if it is after it alphabetically.
+                // For example, 'z' > 'a', alphabetically, 'z' is after 'a'
                 /*
                   if(s1.name.toLowerCase() > s2.name.toLowerCase()) {
                     return 1;               // return 1 if s1 should be after s2
@@ -159,7 +176,7 @@
             this.mostRecentStudent = student;
           },
         },
-      });
+      }).mount("#app");
     </script>
   </body>
 </html>
