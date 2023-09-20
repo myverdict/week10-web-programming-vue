@@ -7,6 +7,12 @@ VueJS
 <h2>Week 10 Labs: VueJS Introduction</h2>
 
 <ul>
+  <li>Products page (Vue 3: Options API)
+    <ul>
+      <li>Products from data</li>
+      <li>Products from json</li>
+    </ul>
+  </li>
   <li>Student Sign-In (Vue 3: Options API)</li>
   <li>Activity Tracker (Vue 3: Options API)</li>
   <li>Lab 9 repository (Vue 2)</li>
