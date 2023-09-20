@@ -7,8 +7,8 @@ VueJS
 <h2>Week 10 Labs: VueJS Introduction</h2>
 
 <ul>
-  <li>Vue.js application for Student Sign-In (Vue 3 Options API)</li>
-  <li>Vue.js application for an Activity Tracker (Vue 3 Options API)</li>
+  <li>Student Sign-In (Vue 3: Options API)</li>
+  <li>Activity Tracker (Vue 3: Options API)</li>
   <li>Lab 9 repository (Vue 2)</li>
 </ul>
 
