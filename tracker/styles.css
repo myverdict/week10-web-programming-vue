@@ -1,0 +1,16 @@
+#records {
+  max-height: 250px;
+  overflow: scroll;
+}
+
+.sketchingRow {
+  background-color: yellow;
+}
+
+.drawingRow {
+  background-color: greenyellow;
+}
+
+.paintingRow {
+  background-color: orange;
+}
