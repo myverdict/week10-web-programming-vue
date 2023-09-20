@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Practice Tracker</title>
-    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -34,11 +34,10 @@
           <!-- Date input -->
           <div class="form-group">
             <!-- TODO display name of activity in the label -->
-            <!-- TODO use a filter to display the name of activity in lowercase -->
             <label class="form-label" for="date">
               What date did you
               <!-- TODO activity name, in lowercase -->
-              {{ activity | lowercase}}?
+              {{ activity.toLowerCase() }}?
             </label>
 
             <!-- TODO use v-model to connect this input to dateString data -->
@@ -49,9 +48,9 @@
               v-model="dateString"
             />
 
-            <small id="date-help" class="form-text text-muted"
-              >Date must be today or in the past.</small
-            >
+            <small id="date-help" class="form-text text-muted">
+              Date must be today or in the past.
+            </small>
           </div>
 
           <!-- Hours input -->
@@ -133,10 +132,13 @@
           <div class="form-check pb-3 pt-3">
             <input
               class="form-check-input"
+              id="completed-practice"
               type="checkbox"
               v-model="completed"
             />
-            <label class="form-check-label">Completed?</label>
+            <label class="form-check-label" for="completed-practice">
+              Completed?
+            </label>
           </div>
 
           <!-- Add a textarea for "Notes" -->
@@ -195,12 +197,12 @@
                                drawingRow: record.type === 'Drawing',
                                paintingRow: record.type === 'Painting'}"
               >
-                <td>{{ record.date | shortDate}}</td>
-                <td>{{ record.hours | decimalPlaces(2)}}</td>
+                <td>{{ Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(record.date) }}</td>
+                <td>{{ record.hours.toFixed(2) }}</td>
                 <td>{{ record.type }}</td>
                 <td>{{ record.medium }}</td>
-                <td>{{ record.completed | checkedBox}}</td>
-                <td>{{ record.note | textareaDisplayCharacterLimit}}</td>
+                <td>{{ checkedBox(record.completed) }}</td>
+                <td>{{ textareaDisplayCharacterLimit(record.note) }}</td>
               </tr>
             </table>
           </div>
@@ -217,7 +219,7 @@
           <p>
             You have practiced a total of
             <!-- TODO display total hours -->
-            {{ totalHours | decimalPlaces(2)}} hours.
+            {{ totalHours.toFixed(2) }} hours.
           </p>
 
           <!-- Challenge question! Display a list of the total hours for each type.  -->
@@ -225,8 +227,7 @@
             Practice hours for each activity:
 
             <li v-for="eachActivityHours in totalHoursForEachActivityRecord">
-              {{eachActivityHours.typeOfActivity}}: {{
-              eachActivityHours.numOfHours | decimalPlaces(2)}}
+              {{ eachActivityHours.typeOfActivity }}: {{ eachActivityHours.numOfHours.toFixed(2) }}
 
               <!-- <span v-if="eachActivityHours.hours > 0">{{ eachActivityHours }}</span> -->
             </li>
@@ -239,60 +240,37 @@
 
     <script>
       // TODO create new Vue app here
-      let app = new Vue({
-        el: "#app",
-        data: {
-          // name of the activity
-          activity: "Practice Art",
+      const { createApp } = Vue;
 
-          // this will be used with v-model to work with form data
-          dateString: "",
-          hours: 1,
-          type: "Sketching",
-          medium: "",
-          completed: false,
-          note: "",
+      createApp({
+        data() {
+          return {
+            // name of the activity
+            activity: "Practice Art",
 
-          // array of activity records
-          activityRecords: [],
+            // this will be used with v-model to work with form data
+            dateString: "",
+            hours: 1,
+            type: "Sketching",
+            medium: "",
+            completed: false,
+            note: "",
 
-          // used to create choices - the option elements for select element
-          types: ["Sketching", "Drawing", "Painting"],
+            // array of activity records
+            activityRecords: [],
 
-          // used to set the values, and the labels for the radio buttons
-          media: {
-            traditional: "Traditional",
-            digital: "Digital",
-          },
+            // used to create choices - the option elements for select element
+            types: ["Sketching", "Drawing", "Painting"],
 
-          // store errors discovered during validation
-          errors: [],
-        },
-        filters: {
-          lowercase(text) {
-            return text.toLowerCase();
-          },
-          shortDate(date) {
-            return new Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(
-              date
-            );
-          },
-          checkedBox(completed) {
-            if (completed) {
-              return `Completed`;
-            }
-            return `Not completed`;
-          },
-          decimalPlaces: function (hours, numberOfDecimalPlaces) {
-            let formattedHours = hours.toFixed(numberOfDecimalPlaces);
-            return formattedHours;
-          },
-          textareaDisplayCharacterLimit(text) {
-            if (text.length >= 40) {
-              return text.substr(0, 40) + "...";
-            }
-            return text;
-          },
+            // used to set the values, and the labels for the radio buttons
+            media: {
+              traditional: "Traditional",
+              digital: "Digital",
+            },
+
+            // store errors discovered during validation
+            errors: [],
+          };
         },
         computed: {
           totalRecords() {
@@ -402,19 +380,13 @@
             this.errors = [];
 
             // Validation: dates need to be valid, and in the past or today
-            if (
-              !this.dateString ||
-              this.dateString == "Invalid Date" ||
-              date > new Date()
-            ) {
+            if (!this.dateString || this.dateString == "Invalid Date" || date > new Date()) {
               this.errors.push("Select a valid date, today or in the past.");
             }
 
             // Validation: Hours should be between 0 and 24
             if (this.hours <= 0 || this.hours > 24) {
-              this.errors.push(
-                "The number of hours must be greater than 0 and less than 24."
-              );
+              this.errors.push("The number of hours must be greater than 0 and less than 24.");
             }
 
             // Validation: Activity type has to be selected from drop down list
@@ -454,8 +426,20 @@
               });
             }
           },
+          checkedBox(completed) {
+            if (completed) {
+              return `Completed`;
+            }
+            return `Not completed`;
+          },
+          textareaDisplayCharacterLimit(text) {
+            if (text.length >= 40) {
+              return text.substr(0, 40) + "...";
+            }
+            return text;
+          },
         },
-      });
+      }).mount("#app");
     </script>
   </body>
 </html>
