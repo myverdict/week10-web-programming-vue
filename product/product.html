@@ -106,7 +106,36 @@
       createApp({
         data() {
           return {
-            products: [],
+            products: [
+              {
+                id: 1,
+                productName: "Boots",
+                description: "Bright Yellow Boots",
+                available: true,
+                quantityAvailable: 100,
+                features: ["Sunshine yellow", "Waterproof"],
+                image: "boots.png",
+                maxQuantity: 5,
+                minQuantity: 1,
+                price: 49.99,
+              },
+              {
+                id: 2,
+                productName: "Hat",
+                description: "Wool Bobble Hat",
+                available: true,
+                quantityAvailable: 40,
+                features: [
+                  "Wool blend fabric",
+                  "Very warm",
+                  "Machine washable",
+                ],
+                image: "hat.png",
+                maxQuantity: 10,
+                minQuantity: 1,
+                price: 14.99,
+              },
+            ],
             customerOrder: [],
           };
         },
