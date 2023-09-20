@@ -1,0 +1,11 @@
+body {
+  padding: 30px;
+  background-color: grey;
+  color: white;
+}
+
+.error {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+}

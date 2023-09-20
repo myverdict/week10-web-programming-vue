@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Page</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- start of #app div -->
+      <!-- HTML here for Vue processing -->
+      <div>
+        <!-- customer's order here -->
+        Your order is:
+        <p v-for="order in customerOrder">{{ order }}</p>
+      </div>
+
+      <div v-for="product in products">
+        <!-- start of product div -->
+        <!-- data from Vue displayed in template -->
+        <h1>{{ product.productName }}</h1>
+
+        <!-- v-bind sets the HTML attribute values using Vue data. -->
+        <img v-bind:src="product.image" />
+
+        <!-- data from Vue displayed in template -->
+        <p>{{ product.description }}</p>
+
+        <!--
+          Conditional rendering.
+          TODO try changing this data in Vue dev tools.
+          Data from Vue displayed in template.
+        -->
+        <p v-if="product.available">This product is available!</p>
+
+        <!--
+          Data from Vue displayed in template.
+          Alternate way of writing the above code.
+          <p v-if="product.available == true">This product is available!</p>
+        -->
+
+        <!-- Comments here are Ok! do not add any other HTML between v-if & else -->
+
+        <!--
+          This is the else part of the v-if above.
+          Data from Vue displayed in template.
+        -->
+        <p>Quantity Available: {{ product.quantityAvailable }}</p>
+
+        <!-- {{ features }} will display an array -->
+        <ul>
+          <!-- data from an array in Vue displayed in template -->
+          <li v-for="feature in product.features">{{ feature }}</li>
+        </ul>
+
+        <p>Price: $ {{ product.price }}</p>
+
+        <div>
+          <div>
+            <!-- data from Vue displayed in template -->
+            <p>
+              The maximum quantity you can order is {{ product.maxQuantity }}
+            </p>
+
+            <!--
+              Handle events in Vue with v-on directive. The v-on:click directive attaches a click event handler/listener to an element.
+              'decreaseQuantity' method from Vue displayed in template.
+            -->
+            <button v-on:click="decreaseQuantity(product)">-</button>
+
+            <!-- 'quantity' data & 'verifyQuantity' method of Vue -->
+            <input
+              type="number"
+              name="`${product.productName}`"
+              v-model="product.quantity"
+              v-on:change="verifyQuantity(product)"
+            />
+
+            <!--
+              Handle events in Vue with v-on directive. The v-on:click directive attaches a click event handler/listener to an element.
+              'increaseQuantity' method from Vue displayed in template.
+            -->
+            <button v-on:click="increaseQuantity(product)">+</button>
+          </div>
+
+          <!-- data from Vue displayed in template -->
+          <p class="error">{{ product.message }}</p>
+        </div>
+
+        <!--
+          Handle events in Vue with v-on directive. The v-on:click directive attaches a click event handler/listener to an element.
+          'order' method from Vue displayed in template.
+        -->
+        <button v-on:click="order(product)">Order</button>
+      </div>
+      <!-- end of product div -->
+    </div>
+    <!-- end of #app div -->
+
+    <script>
+      // Vue JS script here
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            products: [
+              {
+                productName: "Boots", // name of the product
+                description: "Waterproof boots, ideal for MN winters",
+                available: true, // product is available
+                quantityAvailable: 100, // total quantity available in store
+                // product features
+                features: [
+                  "Warm",
+                  "Waterpoof",
+                  "Comes in a pair",
+                  "Snow Boots",
+                ],
+                image: "boots.png", // product image
+                quantity: 1, // quantity customer is ordering, start at 1
+                maxQuantity: 5, // max quantity allowed to be ordered
+                minQuantity: 1, // min quantity allowed to be ordered
+                price: 49.99,
+                message: "",
+              },
+              {
+                productName: "Hat", // name of the product
+                productNamePlural: "Hats",
+                description: "Woolen Hat for Winters",
+                available: true, // product is available
+                quantityAvailable: 40, // total quantity available in store
+                // product features
+                features: ["Wool blend fabric", "High Quality"],
+                image: "hat.png", // product image
+                quantity: 1, // quantity customer is ordering, start at 1
+                maxQuantity: 10, // max quantity allowed to be ordered
+                minQuantity: 1, // min quantity allowed to be ordered
+                price: 14.99,
+                message: "",
+              },
+            ], // end of array
+            customerOrder: [],
+          };
+        },
+        methods: {
+          // function definitions: a function attached to an object is called
+          // a method function, method... almost exactly the same thing
+          order(product) {
+            // display an alert with the order info
+            // Example: "Thank you, you have ordered 4 boots at 49.99, each total = $199.96"
+            // optional - fix case of product name
+            let total = product.price * product.quantity;
+            let orderInfo = `Thank you, you have ordered
+                                     ${product.quantity} of ${product.productName} at $ ${product.price} each.
+                                     Total $ ${total}`;
+            alert(orderInfo);
+            this.customerOrder.push(orderInfo);
+            // TODO how to prevent duplicate order?
+          },
+          decreaseQuantity(product) {
+            product.message = "";
+
+            let newQuantity = product.quantity - 1;
+
+            if (newQuantity < product.minQuantity) {
+              // not allowed
+              product.message = "Minimum quantity is: " + product.minQuantity;
+            } else {
+              product.quantity = newQuantity;
+            }
+          },
+          increaseQuantity(product) {
+            product.message = "";
+
+            // TODO prevent quantity being increased above this.maxQuantity
+            let newQuantity = product.quantity + 1;
+
+            if (newQuantity > product.maxQuantity) {
+              // not allowed
+              product.message = "Maximum quantity is: " + product.maxQuantity;
+            } else {
+              product.quantity = newQuantity;
+            }
+          },
+          verifyQuantity(product) {
+            if (product.quantity < product.minQuantity) {
+              product.message = "Minimum quantity is: " + product.minQuantity;
+              product.quantity = product.minQuantity;
+            }
+            // ToDO add code to reset the maxQuantity if too large
+            if (product.quantity > product.maxQuantity) {
+              product.message = "Maximum quantity is: " + product.maxQuantity;
+              product.quantity = product.maxQuantity;
+            }
+          },
+        },
+      }).mount("#app");
+
+      // let app = new Vue({
+      //   el: "#app",
+      //   data: {
+      //     productApiUrl: "https://vue-2560-product.herokuapp.com/",
+      //     products: [],
+      //     /*
+      //     products: [
+      //       {
+      //         productName: "Boots", // name of the product
+      //         description: "Waterproof boots, ideal for MN winters",
+      //         available: true, // product is available
+      //         quantityAvailable: 100, // total quantity available in store
+      //         // product features
+      //         features: ["Warm", "Waterpoof", "Comes in a pair", "Snow Boots"],
+      //         image: "boots.png", // product image
+      //         quantity: 1, // quantity customer is ordering, start at 1
+      //         maxQuantity: 5, // max quantity allowed to be ordered
+      //         minQuantity: 1, // min quantity allowed to be ordered
+      //         price: 49.99,
+      //         message: "",
+      //       },
+      //       {
+      //         productName: "Hat", // name of the product
+      //         productNamePlural: "Hats",
+      //         description: "Woolen Hat for Winters",
+      //         available: true, // product is available
+      //         quantityAvailable: 40, // total quantity available in store
+      //         // product features
+      //         features: ["Wool blend fabric", "High Quality"],
+      //         image: "hat.png", // product image
+      //         quantity: 1, // quantity customer is ordering, start at 1
+      //         maxQuantity: 10, // max quantity allowed to be ordered
+      //         minQuantity: 1, // min quantity allowed to be ordered
+      //         price: 14.99,
+      //         message: "",
+      //       },
+      //     ], // end of array
+      //     */
+      //     customerOrder: [], // new data for order info
+      //   },
+      //   mounted() {
+      //     console.log("hello!");
+      //     let productsURL = this.productApiUrl + "api/products";
+      //     fetch(productsURL)
+      //       .then((response) => response.json())
+      //       .then((products) => {
+      //         this.products = products; // set Vue data to response from API
+      //       });
+      //   },
+      //   methods: {
+      //     // function definitions: a function attached to an object is called
+      //     // a method function, method... almost exactly the same thing
+      //     order(product) {
+      //       // display an alert with the order info
+      //       // Example: "Thank you, you have ordered 4 boots at 49.99, each total = $199.96"
+      //       // optional - fix case of product name
+      //       let total = product.price * product.quantity;
+      //       let orderInfo = `Thank you, you have ordered
+      //                                ${product.quantity} of ${product.productName} at $ ${product.price} each.
+      //                                Total $ ${total}`;
+      //       alert(orderInfo);
+      //       this.customerOrder.push(orderInfo);
+      //       // TODO how to prevent duplicate order?
+      //     },
+      //     decreaseQuantity(product) {
+      //       product.message = "";
+
+      //       let newQuantity = product.quantity - 1;
+
+      //       if (newQuantity < product.minQuantity) {
+      //         // not allowed
+      //         product.message = "Minimum quantity is: " + product.minQuantity;
+      //       } else {
+      //         product.quantity = newQuantity;
+      //       }
+      //     },
+      //     increaseQuantity(product) {
+      //       product.message = "";
+
+      //       // TODO prevent quantity being increased above this.maxQuantity
+      //       let newQuantity = product.quantity + 1;
+
+      //       if (newQuantity > product.maxQuantity) {
+      //         // not allowed
+      //         product.message = "Maximum quantity is: " + product.maxQuantity;
+      //       } else {
+      //         product.quantity = newQuantity;
+      //       }
+      //     },
+      //     verifyQuantity(product) {
+      //       if (product.quantity < product.minQuantity) {
+      //         product.message = "Minimum quantity is: " + product.minQuantity;
+      //         product.quantity = product.minQuantity;
+      //       }
+      //       // ToDO add code to reset the maxQuantity if too large
+      //       if (product.quantity > product.maxQuantity) {
+      //         product.message = "Maximum quantity is: " + product.maxQuantity;
+      //         product.quantity = product.maxQuantity;
+      //       }
+      //     },
+      //   },
+      // });
+    </script>
+  </body>
+</html>

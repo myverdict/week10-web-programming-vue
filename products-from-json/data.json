@@ -1,0 +1,41 @@
+[
+  {
+    "productName": "Boots",
+    "description": "Waterproof boots, ideal for MN winters",
+    "available": true,
+    "quantityAvailable": 100,
+    "features": ["Warm", "Waterpoof", "Comes in a pair", "Snow Boots"],
+    "image": "boots.png",
+    "quantity": 1,
+    "maxQuantity": 5,
+    "minQuantity": 1,
+    "price": 49.99,
+    "message": ""
+  },
+  {
+    "productName": "Hat",
+    "productNamePlural": "Hats",
+    "description": "Woolen Hat for Winters",
+    "available": true,
+    "quantityAvailable": 40,
+    "features": ["Wool blend fabric", "High Quality"],
+    "image": "hat.png",
+    "quantity": 1,
+    "maxQuantity": 10,
+    "minQuantity": 1,
+    "price": 14.99,
+    "message": ""
+  },
+  {
+    "id": 3,
+    "productName": "Mittens",
+    "description": "Red Wool Mittens",
+    "available": false,
+    "quantityAvailable": 0,
+    "features": ["Handmade", "One size fits all", "Pure wool"],
+    "image": "./images/mittens.png",
+    "maxQuantity": 0,
+    "minQuantity": 0,
+    "price": 18.99
+  }
+]
