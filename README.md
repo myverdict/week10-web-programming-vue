@@ -12,7 +12,7 @@ VueJS
   <li>Lab 9 repository (Vue 2)</li>
 </ul>
 
-<a href="https://myverdict.github.io/week9-web-programming-vue/index.html">
+<a href="https://myverdict.github.io/week10-web-programming-vue/index.html">
   Click here to view live!
 </a>
 
