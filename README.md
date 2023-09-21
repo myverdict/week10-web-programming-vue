@@ -4,7 +4,7 @@ VueJS
 
 <h1>WEB PROGRAMMING</h1>
 
-<h2>Week 10 Labs: VueJS Introduction</h2>
+<h2>Week 10 Labs: Vue Directives</h2>
 
 <ul>
   <li>Vue bind keys:
