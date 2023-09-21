@@ -1,10 +1,10 @@
 # week10-web-programming-vue
 
-VueJS
+Vue 3 Directives
 
 <h1>WEB PROGRAMMING</h1>
 
-<h2>Week 10 Labs: Vue Directives</h2>
+<h2>Week 10 Labs: Vue 3 Directives</h2>
 
 <ul>
   <li>Vue bind keys:
