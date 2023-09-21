@@ -1,0 +1,16 @@
+body {
+  padding: 30px;
+  background-color: grey;
+  color: white;
+}
+
+img {
+  width: 600px;
+  height: 400px;
+}
+
+.error {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+}

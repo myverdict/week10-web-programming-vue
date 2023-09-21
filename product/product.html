@@ -108,32 +108,36 @@
           return {
             products: [
               {
-                id: 1,
                 productName: "Boots",
-                description: "Bright Yellow Boots",
+                description: "Waterproof boots, ideal for MN winters",
                 available: true,
                 quantityAvailable: 100,
-                features: ["Sunshine yellow", "Waterproof"],
+                features: [
+                  "Warm",
+                  "Waterpoof",
+                  "Comes in a pair",
+                  "Snow Boots",
+                ],
                 image: "boots.png",
+                quantity: 1,
                 maxQuantity: 5,
                 minQuantity: 1,
                 price: 49.99,
+                message: "",
               },
               {
-                id: 2,
                 productName: "Hat",
-                description: "Wool Bobble Hat",
+                productNamePlural: "Hats",
+                description: "Woolen Hat for Winters",
                 available: true,
                 quantityAvailable: 40,
-                features: [
-                  "Wool blend fabric",
-                  "Very warm",
-                  "Machine washable",
-                ],
+                features: ["Wool blend fabric", "High Quality"],
                 image: "hat.png",
+                quantity: 1,
                 maxQuantity: 10,
                 minQuantity: 1,
                 price: 14.99,
+                message: "",
               },
             ],
             customerOrder: [],
@@ -148,8 +152,8 @@
             // optional - fix case of product name
             let total = product.price * product.quantity;
             let orderInfo = `Thank you, you have ordered
-                                     ${product.quantity} of ${product.productName} at $ ${product.price} each.
-                                     Total $ ${total}`;
+                            ${product.quantity} of ${product.productName} at $ ${product.price} each.
+                            Total $ ${total}`;
             alert(orderInfo);
             this.customerOrder.push(orderInfo);
             // TODO how to prevent duplicate order?
@@ -184,7 +188,7 @@
               product.message = "Minimum quantity is: " + product.minQuantity;
               product.quantity = product.minQuantity;
             }
-            // ToDO add code to reset the maxQuantity if too large
+            // TODO add code to reset the maxQuantity if too large
             if (product.quantity > product.maxQuantity) {
               product.message = "Maximum quantity is: " + product.maxQuantity;
               product.quantity = product.maxQuantity;

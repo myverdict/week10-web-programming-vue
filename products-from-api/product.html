@@ -106,38 +106,19 @@
       createApp({
         data() {
           return {
-            products: [
-              {
-                id: 1,
-                productName: "Boots",
-                description: "Bright Yellow Boots",
-                available: true,
-                quantityAvailable: 100,
-                features: ["Sunshine yellow", "Waterproof"],
-                image: "boots.png",
-                maxQuantity: 5,
-                minQuantity: 1,
-                price: 49.99,
-              },
-              {
-                id: 2,
-                productName: "Hat",
-                description: "Wool Bobble Hat",
-                available: true,
-                quantityAvailable: 40,
-                features: [
-                  "Wool blend fabric",
-                  "Very warm",
-                  "Machine washable",
-                ],
-                image: "hat.png",
-                maxQuantity: 10,
-                minQuantity: 1,
-                price: 14.99,
-              },
-            ],
+            productApiUrl: "http://127.0.0.1:3000/",
+            products: [],
             customerOrder: [],
           };
+        },
+        mounted() {
+          console.log("hello!");
+          let productsURL = this.productApiUrl + "api/products";
+          fetch(productsURL)
+            .then((response) => response.json())
+            .then((products) => {
+              this.products = products; // set Vue data to response from API
+            });
         },
         methods: {
           // function definitions: a function attached to an object is called
@@ -147,9 +128,9 @@
             // Example: "Thank you, you have ordered 4 boots at 49.99, each total = $199.96"
             // optional - fix case of product name
             let total = product.price * product.quantity;
-            let orderInfo = `Thank you, you have ordered
-                                     ${product.quantity} of ${product.productName} at $ ${product.price} each.
-                                     Total $ ${total}`;
+            let orderInfo = `Thank you, you have ordered:
+                            ${product.quantity} of ${product.productName} at $ ${product.price} each.
+                            Total $ ${total}`;
             alert(orderInfo);
             this.customerOrder.push(orderInfo);
             // TODO how to prevent duplicate order?
@@ -165,6 +146,11 @@
             } else {
               product.quantity = newQuantity;
             }
+
+            console.log(isNaN(newQuantity));
+            // if (isNaN(newQuantity)) {
+            //   product.message = "Please add at least one item.";
+            // }
           },
           increaseQuantity(product) {
             product.message = "";
@@ -184,7 +170,7 @@
               product.message = "Minimum quantity is: " + product.minQuantity;
               product.quantity = product.minQuantity;
             }
-            // ToDO add code to reset the maxQuantity if too large
+            // TODO add code to reset the maxQuantity if too large
             if (product.quantity > product.maxQuantity) {
               product.message = "Maximum quantity is: " + product.maxQuantity;
               product.quantity = product.maxQuantity;
