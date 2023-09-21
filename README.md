@@ -7,6 +7,11 @@ VueJS
 <h2>Week 10 Labs: VueJS Introduction</h2>
 
 <ul>
+  <li>Vue bind keys:
+    <ul>
+      <li>With `v-bind:key`</li>
+      <li>Without `v-bind:key`</li>
+    </ul>
   <li>Products page (Vue 3: Options API)
     <ul>
       <li>Products from data</li>
