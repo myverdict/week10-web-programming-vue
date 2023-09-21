@@ -10,6 +10,7 @@ VueJS
   <li>Products page (Vue 3: Options API)
     <ul>
       <li>Products from data</li>
+      <li>Products from API (Please run the api locally first)</li>
     </ul>
   </li>
   <li>Student Sign-In (Vue 3: Options API)</li>
