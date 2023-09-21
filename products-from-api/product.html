@@ -127,12 +127,19 @@
             // display an alert with the order info
             // Example: "Thank you, you have ordered 4 boots at 49.99, each total = $199.96"
             // optional - fix case of product name
-            let total = product.price * product.quantity;
-            let orderInfo = `Thank you, you have ordered:
-                            ${product.quantity} of ${product.productName} at $ ${product.price} each.
-                            Total $ ${total}`;
+            let total = 0;
+            let orderInfo = "";
+
+            if (product.available) {
+              total = product.price * product.quantity;
+              orderInfo = `Thank you, you have ordered:
+                           ${product.quantity} of ${product.productName} at $ ${product.price} each.
+                           Total $ ${total.toFixed(2)}`;
+              this.customerOrder.push(orderInfo);
+            } else {
+              orderInfo = "This product is out of stock!";
+            }
             alert(orderInfo);
-            this.customerOrder.push(orderInfo);
             // TODO how to prevent duplicate order?
           },
           decreaseQuantity(product) {
@@ -140,17 +147,14 @@
 
             let newQuantity = product.quantity - 1;
 
-            if (newQuantity < product.minQuantity) {
+            if (!product.available) {
               // not allowed
+              product.message = "Out of Stock";
+            } else if (newQuantity < product.minQuantity) {
               product.message = "Minimum quantity is: " + product.minQuantity;
             } else {
               product.quantity = newQuantity;
             }
-
-            console.log(isNaN(newQuantity));
-            // if (isNaN(newQuantity)) {
-            //   product.message = "Please add at least one item.";
-            // }
           },
           increaseQuantity(product) {
             product.message = "";
@@ -158,7 +162,9 @@
             // TODO prevent quantity being increased above this.maxQuantity
             let newQuantity = product.quantity + 1;
 
-            if (newQuantity > product.maxQuantity) {
+            if (!product.available) {
+              product.message = "Out of Stock";
+            } else if (newQuantity > product.maxQuantity) {
               // not allowed
               product.message = "Maximum quantity is: " + product.maxQuantity;
             } else {
@@ -166,12 +172,14 @@
             }
           },
           verifyQuantity(product) {
-            if (product.quantity < product.minQuantity) {
+            if (!product.available) {
+              product.message = "Out of Stock";
+            } else if (product.quantity < product.minQuantity) {
               product.message = "Minimum quantity is: " + product.minQuantity;
               product.quantity = product.minQuantity;
             }
             // TODO add code to reset the maxQuantity if too large
-            if (product.quantity > product.maxQuantity) {
+            else if (product.quantity > product.maxQuantity) {
               product.message = "Maximum quantity is: " + product.maxQuantity;
               product.quantity = product.maxQuantity;
             }
