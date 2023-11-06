@@ -7,7 +7,7 @@ Vue 3 Directives
 <h2>Week 10 Labs: Vue 3 Directives</h2>
 
 <ul>
-  <li>Vue bind keys:
+  <li>Minnesota Cities example - Vue bind keys:
     <ul>
       <li>With v-bind:key</li>
       <li>Without v-bind:key</li>

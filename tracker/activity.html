@@ -244,7 +244,8 @@
             Practice hours for each activity:
 
             <li v-for="eachActivityHours in totalHoursForEachActivityRecord">
-              {{ eachActivityHours.typeOfActivity }}: {{ eachActivityHours.numOfHours.toFixed(2) }}
+              {{ eachActivityHours.typeOfActivity }}: {{
+              eachActivityHours.numOfHours.toFixed(2) }}
 
               <!-- <span v-if="eachActivityHours.hours > 0">{{ eachActivityHours }}</span> -->
             </li>
@@ -263,26 +264,26 @@
         data() {
           return {
             // name of the activity
-            activity: "Practice Art",
+            activity: 'Practice Art',
 
             // this will be used with v-model to work with form data
-            dateString: "",
+            dateString: '',
             hours: 1,
-            type: "Sketching",
-            medium: "",
+            type: 'Sketching',
+            medium: '',
             completed: false,
-            note: "",
+            note: '',
 
             // array of activity records
             activityRecords: [],
 
             // used to create choices - the option elements for select element
-            types: ["Sketching", "Drawing", "Painting"],
+            types: ['Sketching', 'Drawing', 'Painting'],
 
             // used to set the values, and the labels for the radio buttons
             media: {
-              traditional: "Traditional",
-              digital: "Digital",
+              traditional: 'Traditional',
+              digital: 'Digital',
             },
 
             // store errors discovered during validation
@@ -294,7 +295,7 @@
             if (this.activityRecords.length == 1) {
               return `1 record`;
             } else {
-              return this.activityRecords.length + " records";
+              return this.activityRecords.length + ' records';
             }
           },
           totalHours() {
@@ -399,27 +400,27 @@
             // Validation: dates need to be valid, and in the past or today
             if (
               !this.dateString ||
-              this.dateString == "Invalid Date" ||
+              this.dateString == 'Invalid Date' ||
               date > new Date()
             ) {
-              this.errors.push("Select a valid date, today or in the past.");
+              this.errors.push('Select a valid date, today or in the past.');
             }
 
             // Validation: Hours should be between 0 and 24
             if (this.hours <= 0 || this.hours > 24) {
               this.errors.push(
-                "The number of hours must be greater than 0 and less than 24."
+                'The number of hours must be greater than 0 and less than 24.'
               );
             }
 
             // Validation: Activity type has to be selected from drop down list
             if (!this.type) {
-              this.errors.push("Select a type.");
+              this.errors.push('Select a type.');
             }
 
             // Validation: Activity medium must be selected (for radio buttons)
             if (!this.medium) {
-              this.errors.push("Select a media.");
+              this.errors.push('Select a media.');
             }
 
             // if there are no errors, add a record to the summary
@@ -457,15 +458,17 @@
           },
           textareaDisplayCharacterLimit(text) {
             if (text.length >= 40) {
-              return text.substr(0, 40) + "...";
+              return text.substr(0, 40) + '...';
             }
             return text;
           },
           formatDate(date) {
-            return Intl.DateTimeFormat("en-US", { timeZone: "UTC" }).format(date);
-          }
+            return Intl.DateTimeFormat('en-US', { timeZone: 'UTC' }).format(
+              date
+            );
+          },
         },
-      }).mount("#app");
+      }).mount('#app');
     </script>
   </body>
 </html>

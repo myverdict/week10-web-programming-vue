@@ -108,36 +108,36 @@
           return {
             products: [
               {
-                productName: "Boots",
-                description: "Waterproof boots, ideal for MN winters",
+                productName: 'Boots',
+                description: 'Waterproof boots, ideal for MN winters',
                 available: true,
                 quantityAvailable: 100,
                 features: [
-                  "Warm",
-                  "Waterpoof",
-                  "Comes in a pair",
-                  "Snow Boots",
+                  'Warm',
+                  'Waterpoof',
+                  'Comes in a pair',
+                  'Snow Boots',
                 ],
-                image: "boots.png",
+                image: 'boots.png',
                 quantity: 1,
                 maxQuantity: 5,
                 minQuantity: 1,
                 price: 49.99,
-                message: "",
+                message: '',
               },
               {
-                productName: "Hat",
-                productNamePlural: "Hats",
-                description: "Woolen Hat for Winters",
+                productName: 'Hat',
+                productNamePlural: 'Hats',
+                description: 'Woolen Hat for Winters',
                 available: true,
                 quantityAvailable: 40,
-                features: ["Wool blend fabric", "High Quality"],
-                image: "hat.png",
+                features: ['Wool blend fabric', 'High Quality'],
+                image: 'hat.png',
                 quantity: 1,
                 maxQuantity: 10,
                 minQuantity: 1,
                 price: 14.99,
-                message: "",
+                message: '',
               },
             ],
             customerOrder: [],
@@ -159,43 +159,43 @@
             // TODO how to prevent duplicate order?
           },
           decreaseQuantity(product) {
-            product.message = "";
+            product.message = '';
 
             let newQuantity = product.quantity - 1;
 
             if (newQuantity < product.minQuantity) {
               // not allowed
-              product.message = "Minimum quantity is: " + product.minQuantity;
+              product.message = 'Minimum quantity is: ' + product.minQuantity;
             } else {
               product.quantity = newQuantity;
             }
           },
           increaseQuantity(product) {
-            product.message = "";
+            product.message = '';
 
             // TODO prevent quantity being increased above this.maxQuantity
             let newQuantity = product.quantity + 1;
 
             if (newQuantity > product.maxQuantity) {
               // not allowed
-              product.message = "Maximum quantity is: " + product.maxQuantity;
+              product.message = 'Maximum quantity is: ' + product.maxQuantity;
             } else {
               product.quantity = newQuantity;
             }
           },
           verifyQuantity(product) {
             if (product.quantity < product.minQuantity) {
-              product.message = "Minimum quantity is: " + product.minQuantity;
+              product.message = 'Minimum quantity is: ' + product.minQuantity;
               product.quantity = product.minQuantity;
             }
             // TODO add code to reset the maxQuantity if too large
             if (product.quantity > product.maxQuantity) {
-              product.message = "Maximum quantity is: " + product.maxQuantity;
+              product.message = 'Maximum quantity is: ' + product.maxQuantity;
               product.quantity = product.maxQuantity;
             }
           },
         },
-      }).mount("#app");
+      }).mount('#app');
     </script>
   </body>
 </html>

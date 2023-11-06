@@ -3,7 +3,7 @@
   <head>
     <style>
       body {
-        font-family: "Verdana";
+        font-family: 'Verdana';
         margin: 20px;
       }
       img {
@@ -28,17 +28,17 @@
 
   <script>
     let url = document.location.href;
-    let productURL = url + "api/products";
-    let apiHome = document.querySelector("#product-api");
+    let productURL = url + 'api/products';
+    let apiHome = document.querySelector('#product-api');
     apiHome.innerHTML = productURL;
     apiHome.href = productURL;
 
-    let productImg = url + "img/boots.png";
-    let apiImg = document.querySelector("#product-img");
+    let productImg = url + 'img/boots.png';
+    let apiImg = document.querySelector('#product-img');
     apiImg.innerHTML = productImg;
     apiImg.href = productImg;
 
-    let exampleImage = document.querySelector("#example-img");
+    let exampleImage = document.querySelector('#example-img');
     exampleImage.src = productImg;
   </script>
 </html>

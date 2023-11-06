@@ -111,15 +111,15 @@
     <script>
       // TODO Vue app
       const { createApp } = Vue;
-      
+
       createApp({
         data() {
           return {
-            newStudentName: "",
-            newStarID: "",
+            newStudentName: '',
+            newStarID: '',
             students: [
-              { name: "A Student", starID: "aa1234aa", present: false },
-              { name: "B Student", starID: "by456osc", present: false },
+              { name: 'A Student', starID: 'aa1234aa', present: false },
+              { name: 'B Student', starID: 'by456osc', present: false },
             ],
             errors: [],
             mostRecentStudent: {}, // last person to change the value of a checkbox
@@ -135,11 +135,11 @@
             this.errors = [];
 
             if (!this.newStudentName) {
-              this.errors.push("Student name is required.");
+              this.errors.push('Student name is required.');
             }
 
             if (!this.newStarID) {
-              this.errors.push("Star ID is required.");
+              this.errors.push('Star ID is required.');
             }
 
             // Validate the student's name & starID are entered
@@ -168,8 +168,8 @@
                 return s1.name.toLowerCase() > s2.name.toLowerCase() ? 1 : -1;
               });
 
-              this.newStudentName = "";
-              this.newStarID = "";
+              this.newStudentName = '';
+              this.newStarID = '';
             }
           },
           arrivedOrLeft(student) {
@@ -177,7 +177,7 @@
             this.mostRecentStudent = student;
           },
         },
-      }).mount("#app");
+      }).mount('#app');
     </script>
   </body>
 </html>
