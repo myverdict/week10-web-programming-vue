@@ -12,12 +12,14 @@ Vue 3 Directives
       <li>With v-bind:key</li>
       <li>Without v-bind:key</li>
     </ul>
+  </li>
   <li>Products page (Vue 3: Options API)
     <ul>
       <li>Products from data</li>
       <li>Products from API (Please run the api locally first)</li>
     </ul>
   </li>
+  <li>Vue 3 slots: introduction (Vite app)</li>
   <li>Student Sign-In (Vue 3: Options API)</li>
   <li>Activity Tracker (Vue 3: Options API)</li>
   <li>Lab 9 repository (Vue 2)</li>
